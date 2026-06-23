@@ -16,3 +16,15 @@ body{
   max-width:1280px;
   margin:auto;
 }
+
+input[type="date"] {
+  width: 100%;
+  min-height: 52px;
+  appearance: auto;
+  -webkit-appearance: auto;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 1;
+  cursor: pointer;
+}

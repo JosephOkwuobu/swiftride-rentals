@@ -34,15 +34,17 @@ const RentalForm = () => {
   };
 
   const isAvailable = (carName, from, to) => {
-    const data = JSON.parse(localStorage.getItem("bookings") || "{}");
+    const data = JSON.parse(
+      localStorage.getItem("bookings") || "{}"
+    );
 
     const bookings = data[carName] || [];
 
-    return !bookings.some((b) => {
+    return !bookings.some((booking) => {
       return (
-        (from >= b.from && from <= b.to) ||
-        (to >= b.from && to <= b.to) ||
-        (from <= b.from && to >= b.to)
+        (from >= booking.from && from <= booking.to) ||
+        (to >= booking.from && to <= booking.to) ||
+        (from <= booking.from && to >= booking.to)
       );
     });
   };
@@ -62,11 +64,15 @@ const RentalForm = () => {
     );
 
     if (!available) {
-      alert("This vehicle is already booked for the selected dates.");
+      alert(
+        "🚫 This vehicle is already booked for the selected dates."
+      );
       return;
     }
 
-    const data = JSON.parse(localStorage.getItem("bookings") || "{}");
+    const data = JSON.parse(
+      localStorage.getItem("bookings") || "{}"
+    );
 
     if (!data[form.car]) {
       data[form.car] = [];
@@ -79,11 +85,14 @@ const RentalForm = () => {
       phone: form.phone,
     });
 
-    localStorage.setItem("bookings", JSON.stringify(data));
-
-    setSuccess(true);
+    localStorage.setItem(
+      "bookings",
+      JSON.stringify(data)
+    );
 
     localStorage.removeItem("selectedCar");
+
+    setSuccess(true);
   };
 
   return (
@@ -91,88 +100,124 @@ const RentalForm = () => {
       id="book"
       className="max-w-4xl mx-auto px-6 py-20"
     >
-      <h2 className="text-3xl font-bold text-center mb-8">
+      <h2 className="text-4xl font-bold text-center mb-10">
         Book Your Vehicle
       </h2>
 
       {success ? (
-        <div className="bg-green-100 text-green-800 p-6 rounded text-center flex flex-col items-center gap-2">
-          <CheckCircle size={48} />
-          <h3 className="font-bold text-xl">
-            Booking Confirmed Successfully
+        <div className="bg-green-100 text-green-800 p-8 rounded-xl shadow text-center flex flex-col items-center gap-3">
+          <CheckCircle size={60} />
+          <h3 className="text-2xl font-bold">
+            Booking Confirmed!
           </h3>
           <p>
             Thank you for choosing SwiftRide Rentals.
+            We will contact you shortly.
           </p>
         </div>
       ) : (
         <form
           onSubmit={handleSubmit}
-          className="space-y-4 bg-white p-6 shadow rounded-lg"
+          className="bg-white p-6 md:p-8 rounded-xl shadow-lg space-y-5"
         >
-          <input
-            type="text"
-            name="name"
-            placeholder="Full Name"
-            value={form.name}
-            onChange={handleChange}
-            className="w-full border p-3 rounded"
-            required
-          />
+          {/* NAME */}
+          <div>
+            <label className="block mb-2 font-medium text-gray-700">
+              Full Name
+            </label>
 
-          <input
-            type="tel"
-            name="phone"
-            placeholder="Phone Number"
-            value={form.phone}
-            onChange={handleChange}
-            className="w-full border p-3 rounded"
-            required
-          />
+            <input
+              type="text"
+              name="name"
+              value={form.name}
+              onChange={handleChange}
+              placeholder="Enter your full name"
+              className="w-full border border-gray-300 p-3 rounded-lg"
+              required
+            />
+          </div>
 
-          {/* VEHICLE DROPDOWN */}
-          <select
-            name="car"
-            value={form.car}
-            onChange={handleChange}
-            className="w-full border p-3 rounded"
-            required
-          >
-            <option value="">
+          {/* PHONE */}
+          <div>
+            <label className="block mb-2 font-medium text-gray-700">
+              Phone Number
+            </label>
+
+            <input
+              type="tel"
+              name="phone"
+              value={form.phone}
+              onChange={handleChange}
+              placeholder="Enter phone number"
+              className="w-full border border-gray-300 p-3 rounded-lg"
+              required
+            />
+          </div>
+
+          {/* VEHICLE */}
+          <div>
+            <label className="block mb-2 font-medium text-gray-700">
               Select Vehicle
-            </option>
+            </label>
 
-            {cars.map((car) => (
-              <option
-                key={car.id}
-                value={car.name}
-              >
-                {car.name}
+            <select
+              name="car"
+              value={form.car}
+              onChange={handleChange}
+              className="w-full border border-gray-300 p-3 rounded-lg"
+              required
+            >
+              <option value="">
+                Choose a vehicle
               </option>
-            ))}
-          </select>
 
-          <input
-            type="date"
-            name="from"
-            value={form.from}
-            onChange={handleChange}
-            className="w-full border p-3 rounded"
-            required
-          />
+              {cars.map((car) => (
+                <option
+                  key={car.id}
+                  value={car.name}
+                >
+                  {car.name}
+                </option>
+              ))}
+            </select>
+          </div>
 
-          <input
-            type="date"
-            name="to"
-            value={form.to}
-            onChange={handleChange}
-            className="w-full border p-3 rounded"
-            required
-          />
+          {/* PICKUP DATE */}
+          <div>
+            <label className="block mb-2 font-medium text-gray-700">
+              Pickup Date
+            </label>
 
+            <input
+              type="date"
+              name="from"
+              value={form.from}
+              onChange={handleChange}
+              className="w-full border border-gray-300 p-3 rounded-lg min-h-[52px]"
+              required
+            />
+          </div>
+
+          {/* RETURN DATE */}
+          <div>
+            <label className="block mb-2 font-medium text-gray-700">
+              Return Date
+            </label>
+
+            <input
+              type="date"
+              name="to"
+              value={form.to}
+              onChange={handleChange}
+              className="w-full border border-gray-300 p-3 rounded-lg min-h-[52px]"
+              required
+            />
+          </div>
+
+          {/* BUTTON */}
           <button
             type="submit"
-            className="w-full bg-blue-900 text-white py-3 rounded hover:bg-blue-800 transition"
+            className="w-full bg-blue-900 text-white py-3 rounded-lg hover:bg-blue-800 transition duration-300 font-semibold"
           >
             Confirm Booking
           </button>

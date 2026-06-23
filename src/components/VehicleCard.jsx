@@ -4,7 +4,7 @@ const VehicleCard = ({ car }) => {
 
   const handleWhatsApp = () => {
     const message = `Hello SwiftRide Rentals, I want to book: ${car.name}`;
-    const url = `https://wa.me/2348043972181?text=${encodeURIComponent(message)}`;
+    const url = `https://wa.me/18043972181?text=${encodeURIComponent(message)}`;
     window.open(url, "_blank");
   };
 

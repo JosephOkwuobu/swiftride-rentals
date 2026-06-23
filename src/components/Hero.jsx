@@ -15,7 +15,7 @@ const Hero = () => {
 
         <h1 className="text-5xl md:text-7xl font-bold mb-6">
           Premium Car Rentals
-          <span className="block text-red-500">
+          <span className="block text-blue-500">
             In Arlington, Virginia
           </span>
         </h1>

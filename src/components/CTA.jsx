@@ -25,12 +25,10 @@ const CTA = () => {
           </a>
 
           <a
-            href="https://wa.me/18043972181"
-            target="_blank"
-            rel="noreferrer"
+            href="sms:+18043972181"
             className="bg-white text-blue-900 px-8 py-4 rounded-xl font-semibold"
           >
-            Contact on WhatsApp
+            Send an SMS
           </a>
 
         </div>

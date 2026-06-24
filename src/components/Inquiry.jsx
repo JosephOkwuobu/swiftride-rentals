@@ -14,7 +14,7 @@ const Inquiry = () => {
           </h2>
 
           <p className="text-gray-600">
-            We'd love to hear from you.
+            We'd love to hear from you. Whether you have questions about our rental process, need assistance with a booking, or want to provide feedback, our team is here to help. Reach out to us via phone, SMS, or visit our location in Arlington, VA. 
           </p>
 
         </div>
@@ -36,7 +36,7 @@ const Inquiry = () => {
           <div className="bg-slate-50 p-8 rounded-2xl shadow">
 
             <h3 className="text-2xl font-bold text-blue-900 mb-4">
-              WhatsApp
+              SMS / Call
             </h3>
 
             <p className="text-gray-600">

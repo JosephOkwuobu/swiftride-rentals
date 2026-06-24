@@ -2,31 +2,44 @@ import { Car, MessageCircle, Calendar } from "lucide-react";
 
 const VehicleCard = ({ car }) => {
 
-  const handleWhatsApp = () => {
+  const handleSMS = () => {
     const message = `Hello SwiftRide Rentals, I want to book: ${car.name}`;
-    const url = `https://wa.me/18043972181?text=${encodeURIComponent(message)}`;
-    window.open(url, "_blank");
+
+    window.location.href =
+      `sms:+18043972181?body=${encodeURIComponent(message)}`;
   };
 
   const handleReserve = () => {
     localStorage.setItem("selectedCar", JSON.stringify(car));
 
     const form = document.getElementById("book");
-    if (form) form.scrollIntoView({ behavior: "smooth" });
+
+    if (form) {
+      form.scrollIntoView({
+        behavior: "smooth",
+      });
+    }
   };
 
   return (
     <div className="border rounded-xl bg-white shadow-sm overflow-hidden">
 
-      <img src={car.image} className="w-full h-48 object-cover" />
+      <img
+        src={car.image}
+        alt={car.name}
+        className="w-full h-48 object-cover"
+      />
 
       <div className="p-4">
 
         <h3 className="font-bold text-lg flex items-center gap-2">
-          <Car size={18} /> {car.name}
+          <Car size={18} />
+          {car.name}
         </h3>
 
-        <p className="text-gray-600">{car.price}</p>
+        <p className="text-gray-600">
+          {car.price}
+        </p>
 
         <div className="space-y-2 mt-4">
 
@@ -39,16 +52,17 @@ const VehicleCard = ({ car }) => {
           </button>
 
           <button
-            onClick={handleWhatsApp}
+            onClick={handleSMS}
             className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition flex items-center justify-center gap-2"
           >
             <MessageCircle size={18} />
-            Book via WhatsApp
+            Book via SMS
           </button>
 
         </div>
 
       </div>
+
     </div>
   );
 };

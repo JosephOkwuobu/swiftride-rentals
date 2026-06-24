@@ -76,7 +76,7 @@ const FAQ = () => {
             </h3>
 
             <p className="text-gray-600">
-              You can call us, send a WhatsApp message,
+              You can call us, send a text message via SMS,
               or complete the rental application form.
             </p>
 

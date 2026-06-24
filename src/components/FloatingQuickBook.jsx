@@ -10,10 +10,12 @@ const FloatingQuickBook = () => {
     setOpen(false);
   };
 
-  const whatsapp = () => {
-    const message = "Hello SwiftRide Rentals, I want to book a vehicle.";
-    const url = `https://wa.me/18043972181?text=${encodeURIComponent(message)}`;
-    window.open(url, "_blank");
+  const Sms = () => {
+    const message =
+      "Hello SwiftRide Rentals, I want to book a vehicle.";
+
+    window.location.href =
+      `sms:+18043972181?body=${encodeURIComponent(message)}`;
   };
 
   return (
@@ -32,11 +34,11 @@ const FloatingQuickBook = () => {
           </button>
 
           <button
-            onClick={whatsapp}
+            onClick={Sms}
             className="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-full shadow-lg hover:bg-green-500"
           >
             <MessageCircle size={16} />
-            WhatsApp
+            SMS here
           </button>
 
         </div>

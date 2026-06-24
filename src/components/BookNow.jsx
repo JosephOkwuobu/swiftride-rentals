@@ -28,12 +28,10 @@ const BookNow = () => {
           </a>
 
           <a
-            href="https://wa.me/18043972181"
-            target="_blank"
-            rel="noreferrer"
+            href="sms:+18043972181"
             className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-xl"
           >
-            WhatsApp Us
+            Send an SMS
           </a>
 
         </div>

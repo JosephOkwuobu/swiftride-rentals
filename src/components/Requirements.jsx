@@ -1,11 +1,12 @@
 const Requirements = () => {
   const items = [
-    "Valid driver’s license",
-    "Government issued ID (NIN, Passport or Voter’s card)",
-    "Minimum age requirement: 21+",
-    "Security deposit may be required",
-    "Basic driving experience required",
-  ];
+  "Valid driver's license with no major driving violations",
+  "Minimum age requirement of 21 years (drivers under 25 may incur a young driver fee)",
+  "Valid government-issued photo ID required at vehicle pickup",
+  "Proof of insurance or purchase of approved rental protection coverage",
+  "Credit or debit card required for reservation and security deposit",
+  "All renters must agree to SwiftRide Rentals' terms, conditions, and vehicle use policies",
+];
 
   return (
     <section id="requirements" className="bg-gray-950 text-white py-20 px-6">

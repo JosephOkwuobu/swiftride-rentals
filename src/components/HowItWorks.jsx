@@ -49,7 +49,7 @@ const HowItWorks = () => {
             </h3>
 
             <p className="text-gray-600">
-              Contact us by phone, WhatsApp,
+              Contact us by phone, SMS to inquire about availability
               or our rental application form.
             </p>
 

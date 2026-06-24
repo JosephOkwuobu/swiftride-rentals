@@ -93,6 +93,19 @@ const RentalForm = () => {
     localStorage.removeItem("selectedCar");
 
     setSuccess(true);
+
+    const message = `SwiftRide Rental Booking
+
+Name: ${form.name}
+Phone: ${form.phone}
+Vehicle: ${form.car}
+Pickup Date: ${form.from}
+Return Date: ${form.to}`;
+
+    setTimeout(() => {
+      window.location.href =
+        `sms:+18043972181?body=${encodeURIComponent(message)}`;
+    }, 1000);
   };
 
   return (
@@ -107,9 +120,11 @@ const RentalForm = () => {
       {success ? (
         <div className="bg-green-100 text-green-800 p-8 rounded-xl shadow text-center flex flex-col items-center gap-3">
           <CheckCircle size={60} />
+
           <h3 className="text-2xl font-bold">
             Booking Confirmed!
           </h3>
+
           <p>
             Thank you for choosing SwiftRide Rentals.
             We will contact you shortly.

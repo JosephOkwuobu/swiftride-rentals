@@ -95,7 +95,7 @@ const AdminBookings = () => {
   };
 
   useEffect(() => {
-    fetchBookings();
+    queueMicrotask(fetchBookings);
 
     const channel = supabase
       .channel("bookings-channel")

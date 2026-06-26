@@ -1,32 +1,24 @@
- import { useEffect, useState } from "react";
+ import { useState } from "react";
 import { CheckCircle } from "lucide-react";
 import cars from "../data/cars";
 import { supabase } from "../lib/supabase";
 
 const RentalForm = () => {
-  const [form, setForm] = useState({
-    name: "",
-    phone: "",
-    car: "",
-    from: "",
-    to: "",
+  const [form, setForm] = useState(() => {
+    const selectedCar = localStorage.getItem("selectedCar");
+    const parsedCar = selectedCar ? JSON.parse(selectedCar) : null;
+
+    return {
+      name: "",
+      phone: "",
+      car: parsedCar?.name || "",
+      from: "",
+      to: "",
+    };
   });
 
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    const selectedCar = localStorage.getItem("selectedCar");
-
-    if (selectedCar) {
-      const car = JSON.parse(selectedCar);
-
-      setForm((prev) => ({
-        ...prev,
-        car: car.name,
-      }));
-    }
-  }, []);
 
   const handleChange = (e) => {
     setForm((prev) => ({

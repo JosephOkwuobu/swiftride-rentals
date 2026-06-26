@@ -1,5 +1,3 @@
-import  { MessageCircle, } from "lucide-react";
-
 const WhatsAppFloat = () => {
   return (
     <a

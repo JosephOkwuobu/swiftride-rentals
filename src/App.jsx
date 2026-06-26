@@ -1,3 +1,5 @@
+import { Routes, Route } from "react-router-dom";
+
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import About from "./components/About";
@@ -14,11 +16,14 @@ import Footer from "./components/Footer";
 import WhatsAppFloat from "./components/WhatsAppFloat";
 import FloatingQuickBook from "./components/FloatingQuickBook";
 
-function App() {
+import AdminLogin from "./pages/AdminLogin";
+import AdminBookings from "./pages/AdminBookings";
+import ProtectedRoute from "./components/ProtectedRoute";
+
+function HomePage() {
   return (
     <>
       <Navbar />
-
       <Hero />
       <About />
       <Fleet />
@@ -34,6 +39,28 @@ function App() {
       <WhatsAppFloat />
       <FloatingQuickBook />
     </>
+  );
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+
+      <Route
+        path="/admin-login"
+        element={<AdminLogin />}
+      />
+
+      <Route
+        path="/admin-bookings"
+        element={
+          <ProtectedRoute>
+            <AdminBookings />
+          </ProtectedRoute>
+        }
+      />
+    </Routes>
   );
 }
 

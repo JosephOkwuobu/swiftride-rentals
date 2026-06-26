@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+ import { useEffect, useState } from "react";
 import { CheckCircle } from "lucide-react";
 import cars from "../data/cars";
+import { supabase } from "../lib/supabase";
 
 const RentalForm = () => {
   const [form, setForm] = useState({
@@ -12,6 +13,7 @@ const RentalForm = () => {
   });
 
   const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const selectedCar = localStorage.getItem("selectedCar");
@@ -27,29 +29,13 @@ const RentalForm = () => {
   }, []);
 
   const handleChange = (e) => {
-    setForm({
-      ...form,
+    setForm((prev) => ({
+      ...prev,
       [e.target.name]: e.target.value,
-    });
+    }));
   };
 
-  const isAvailable = (carName, from, to) => {
-    const data = JSON.parse(
-      localStorage.getItem("bookings") || "{}"
-    );
-
-    const bookings = data[carName] || [];
-
-    return !bookings.some((booking) => {
-      return (
-        (from >= booking.from && from <= booking.to) ||
-        (to >= booking.from && to <= booking.to) ||
-        (from <= booking.from && to >= booking.to)
-      );
-    });
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!form.car) {
@@ -57,55 +43,44 @@ const RentalForm = () => {
       return;
     }
 
-    const available = isAvailable(
-      form.car,
-      form.from,
-      form.to
-    );
+    setLoading(true);
 
-    if (!available) {
-      alert(
-        "🚫 This vehicle is already booked for the selected dates."
-      );
+    const { error } = await supabase
+      .from("bookings")
+      .insert([
+        {
+          name: form.name,
+          phone: form.phone,
+          car: form.car,
+          pickup_date: form.from,
+          return_date: form.to,
+          status: "Pending",
+        },
+      ]);
+
+    setLoading(false);
+
+    if (error) {
+      console.error(error);
+      alert("Booking failed. Please check your Supabase setup.");
       return;
     }
 
-    const data = JSON.parse(
-      localStorage.getItem("bookings") || "{}"
-    );
-
-    if (!data[form.car]) {
-      data[form.car] = [];
-    }
-
-    data[form.car].push({
-      from: form.from,
-      to: form.to,
-      name: form.name,
-      phone: form.phone,
-    });
-
-    localStorage.setItem(
-      "bookings",
-      JSON.stringify(data)
-    );
-
     localStorage.removeItem("selectedCar");
-
     setSuccess(true);
 
-    const message = `SwiftRide Rental Booking
-
-Name: ${form.name}
-Phone: ${form.phone}
-Vehicle: ${form.car}
-Pickup Date: ${form.from}
-Return Date: ${form.to}`;
+    const message =
+      "SwiftRide Rental Booking\n\n" +
+      "Name: " + form.name + "\n" +
+      "Phone: " + form.phone + "\n" +
+      "Vehicle: " + form.car + "\n" +
+      "Pickup Date: " + form.from + "\n" +
+      "Return Date: " + form.to;
 
     setTimeout(() => {
       window.location.href =
-        `sms:+18043972181?body=${encodeURIComponent(message)}`;
-    }, 1000);
+        "sms:+18043972181?body=" + encodeURIComponent(message);
+    }, 1500);
   };
 
   return (
@@ -135,7 +110,6 @@ Return Date: ${form.to}`;
           onSubmit={handleSubmit}
           className="bg-white p-6 md:p-8 rounded-xl shadow-lg space-y-5"
         >
-          {/* NAME */}
           <div>
             <label className="block mb-2 font-medium text-gray-700">
               Full Name
@@ -152,7 +126,6 @@ Return Date: ${form.to}`;
             />
           </div>
 
-          {/* PHONE */}
           <div>
             <label className="block mb-2 font-medium text-gray-700">
               Phone Number
@@ -169,7 +142,6 @@ Return Date: ${form.to}`;
             />
           </div>
 
-          {/* VEHICLE */}
           <div>
             <label className="block mb-2 font-medium text-gray-700">
               Select Vehicle
@@ -182,22 +154,16 @@ Return Date: ${form.to}`;
               className="w-full border border-gray-300 p-3 rounded-lg"
               required
             >
-              <option value="">
-                Choose a vehicle
-              </option>
+              <option value="">Choose a vehicle</option>
 
               {cars.map((car) => (
-                <option
-                  key={car.id}
-                  value={car.name}
-                >
+                <option key={car.id} value={car.name}>
                   {car.name}
                 </option>
               ))}
             </select>
           </div>
 
-          {/* PICKUP DATE */}
           <div>
             <label className="block mb-2 font-medium text-gray-700">
               Pickup Date
@@ -208,12 +174,11 @@ Return Date: ${form.to}`;
               name="from"
               value={form.from}
               onChange={handleChange}
-              className="w-full border border-gray-300 p-3 rounded-lg min-h-[52px]"
+              className="w-full border border-gray-300 p-3 rounded-lg"
               required
             />
           </div>
 
-          {/* RETURN DATE */}
           <div>
             <label className="block mb-2 font-medium text-gray-700">
               Return Date
@@ -224,17 +189,17 @@ Return Date: ${form.to}`;
               name="to"
               value={form.to}
               onChange={handleChange}
-              className="w-full border border-gray-300 p-3 rounded-lg min-h-[52px]"
+              className="w-full border border-gray-300 p-3 rounded-lg"
               required
             />
           </div>
 
-          {/* BUTTON */}
           <button
             type="submit"
-            className="w-full bg-blue-900 text-white py-3 rounded-lg hover:bg-blue-800 transition duration-300 font-semibold"
+            disabled={loading}
+            className="w-full bg-blue-900 text-white py-3 rounded-lg hover:bg-blue-800 transition disabled:opacity-50"
           >
-            Confirm Booking
+            {loading ? "Processing Booking..." : "Confirm Booking"}
           </button>
         </form>
       )}

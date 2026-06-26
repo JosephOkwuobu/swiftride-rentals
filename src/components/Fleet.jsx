@@ -1,6 +1,5 @@
 import cars from "../data/cars";
 import VehicleCard from "./VehicleCard";
-import { Car } from "lucide-react";
 
 const Fleet = () => {
   return (

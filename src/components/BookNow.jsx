@@ -1,5 +1,3 @@
-import { Calendar } from "lucide-react";
-
 const BookNow = () => {
   return (
     <section

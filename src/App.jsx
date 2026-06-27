@@ -45,15 +45,18 @@ function HomePage() {
 function App() {
   return (
     <Routes>
+      {/* Public Website */}
       <Route path="/" element={<HomePage />} />
 
+      {/* Admin Login */}
       <Route
-        path="/admin-login"
+        path="/admin"
         element={<AdminLogin />}
       />
 
+      {/* Protected Admin Dashboard */}
       <Route
-        path="/admin-bookings"
+        path="/admin/bookings"
         element={
           <ProtectedRoute>
             <AdminBookings />

@@ -3,9 +3,11 @@ import { Navigate } from "react-router-dom";
 const ProtectedRoute = ({ children }) => {
   const auth = localStorage.getItem("adminAuth");
 
-  return auth === "true"
-    ? children
-    : <Navigate to="/admin-login" />;
+  if (auth === "true") {
+    return children;
+  }
+
+  return <Navigate to="/admin" replace />;
 };
 
 export default ProtectedRoute;

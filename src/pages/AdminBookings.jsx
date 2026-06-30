@@ -90,9 +90,9 @@ const AdminBookings = () => {
   };
 
   const logout = () => {
-    localStorage.removeItem("adminAuth");
-    window.location.href = "/admin-login";
-  };
+  sessionStorage.removeItem("swiftride_admin");
+  window.location.href = "/admin-login";
+   };
 
   useEffect(() => {
     queueMicrotask(fetchBookings);

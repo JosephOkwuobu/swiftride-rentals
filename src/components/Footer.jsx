@@ -1,11 +1,13 @@
+import { Link } from "react-router-dom";
+
 const Footer = () => {
   return (
     <footer className="bg-slate-950 text-white py-12">
-
       <div className="max-w-7xl mx-auto px-6">
 
         <div className="grid md:grid-cols-3 gap-10">
 
+          {/* Company */}
           <div>
 
             <h3 className="text-2xl font-bold mb-4">
@@ -19,6 +21,7 @@ const Footer = () => {
 
           </div>
 
+          {/* Quick Links */}
           <div>
 
             <h3 className="text-xl font-bold mb-4">
@@ -28,25 +31,73 @@ const Footer = () => {
             <ul className="space-y-3">
 
               <li>
-                <a href="#about">About</a>
+                <a
+                  href="#about"
+                  className="hover:text-blue-400 transition"
+                >
+                  About
+                </a>
               </li>
 
               <li>
-                <a href="#fleet">Fleet</a>
+                <a
+                  href="#fleet"
+                  className="hover:text-blue-400 transition"
+                >
+                  Fleet
+                </a>
               </li>
 
               <li>
-                <a href="#works">How It Works</a>
+                <a
+                  href="#works"
+                  className="hover:text-blue-400 transition"
+                >
+                  How It Works
+                </a>
               </li>
 
               <li>
-                <a href="#book">Book Now</a>
+                <a
+                  href="#book"
+                  className="hover:text-blue-400 transition"
+                >
+                  Book Now
+                </a>
+              </li>
+
+              <li>
+                <Link
+                  to="/terms"
+                  className="hover:text-blue-400 transition"
+                >
+                  Terms & Conditions
+                </Link>
+              </li>
+
+              <li>
+                <Link
+                  to="/privacy"
+                  className="hover:text-blue-400 transition"
+                >
+                  Privacy Policy
+                </Link>
+              </li>
+
+              <li>
+                <Link
+                  to="/rental-policy"
+                  className="hover:text-blue-400 transition"
+                >
+                  Rental Policy
+                </Link>
               </li>
 
             </ul>
 
           </div>
 
+          {/* Contact */}
           <div>
 
             <h3 className="text-xl font-bold mb-4">
@@ -68,14 +119,11 @@ const Footer = () => {
         <hr className="border-slate-800 my-8" />
 
         <div className="text-center text-gray-500">
-
-          © 2026 SwiftRide Rentals.
+          © {new Date().getFullYear()} SwiftRide Rentals.
           All Rights Reserved.
-
         </div>
 
       </div>
-
     </footer>
   );
 };

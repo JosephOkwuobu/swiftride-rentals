@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+const ADMIN_PASSWORD = "SwiftRide2026";
+
 const AdminLogin = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -8,15 +10,22 @@ const AdminLogin = () => {
   const handleLogin = (e) => {
     e.preventDefault();
 
-    if (password === "SwiftRide2026") {
-      // Save admin session
-      localStorage.setItem("adminAuth", "true");
-
-      // Redirect to Admin Bookings
-      navigate("/admin/bookings");
-    } else {
+    if (password !== ADMIN_PASSWORD) {
       alert("Invalid Password");
+      return;
     }
+
+    const session = {
+      loggedIn: true,
+      expires: Date.now() + 1000 * 60 * 60 * 4, // 4 hours
+    };
+
+    sessionStorage.setItem(
+      "swiftride_admin",
+      JSON.stringify(session)
+    );
+
+    navigate("/admin/bookings");
   };
 
   return (
@@ -34,12 +43,12 @@ const AdminLogin = () => {
           placeholder="Admin Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full p-3 rounded-lg mb-4 border border-gray-700 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full p-3 rounded-lg mb-4 bg-gray-800 border border-gray-700 text-white"
         />
 
         <button
           type="submit"
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg transition"
+          className="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-lg text-white"
         >
           Login
         </button>

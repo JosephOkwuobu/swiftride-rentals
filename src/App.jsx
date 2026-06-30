@@ -19,6 +19,10 @@ import FloatingQuickBook from "./components/FloatingQuickBook";
 import AdminLogin from "./pages/AdminLogin";
 import AdminBookings from "./pages/AdminBookings";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Terms from "./pages/Terms";
+import Privacy from "./pages/Privacy";
+import RentalPolicy from "./pages/RentalPolicy";
+
 
 function HomePage() {
   return (
@@ -63,6 +67,24 @@ function App() {
           </ProtectedRoute>
         }
       />
+
+      {/* Terms and Conditions */}
+      <Route
+        path="/terms"
+        element={<Terms />}
+      />  
+      
+      {/* Privacy Policy */}
+      <Route
+        path="/privacy"
+        element={<Privacy />}
+      />
+
+      {/* Rental Policy */}
+      <Route
+        path="/rental-policy"
+        element={<RentalPolicy />}
+      />  
     </Routes>
   );
 }
